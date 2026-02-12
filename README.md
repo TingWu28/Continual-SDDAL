@@ -77,7 +77,7 @@ The entire pipeline of the simulation-driven differentiable active learning fram
 
 The external arguments of the shell script SDDAL.sh are:
 ```text
-bash Neural_Experimental_Design.sh <beamshape> <lr> <start_round> <end_round> <gpu> <scanner_batch_size> <init_size> <init_only?> <retrain_frequency> <scan_only?>
+bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?>
 ```
 
 - 1, Quick experiment: Execute the following commands in sequence.
