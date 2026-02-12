@@ -2,7 +2,7 @@
 
 # ==========================================
 # Usage:
-#   bash Neural_Experimental_Design.sh <beamshape> <lr> <start_round> <end_round> <gpu> <scanner_batch_size> <init_size> <init_only?> <retrain_frequency> <scan_only?>
+#   bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?>
 #
 # Example:
 #   regular scheme: bash SDDAL.sh rec 0.0002 100 false 1 580 0 5 1 false
