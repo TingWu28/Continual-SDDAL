@@ -210,13 +210,13 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
     cd Active_Curve
     ```
     
-    Determine a list of number of samples you want to train the UNet-T on from scratch. Open the file `TrainSet_curve_sddal.sh` and revise line15 to be the list of number you desire. For example for following line15 of `TrainSet_curve_sddal.sh` indicates that I want to train UNet-T on 100 samples, 200 samples, 300 samples, 400 samples, 600 samples, 700 samples, 800 samples, and 900 samples, respectively:
+    Determine a list of number of samples you want to train the UNet-T on from scratch. Open the file `TrainSet_curve_sddal.sh` and revise line15 to be the list of number you desire. For example the following line15 of `TrainSet_curve_sddal.sh` indicates that I want to train UNet-T on 100 samples, 200 samples, 300 samples, 400 samples, 600 samples, 700 samples, 800 samples, and 900 samples, respectively:
     
     ```text
     samples=(200 300 700 1000 400 500 800 900)
     ```
 
-    Go to line24 of `TrainSet_curve_sddal.sh` to indicate that in all the training jobs you wanted above, the first how many items in the list above do you want to put on GPU0, and the rest will be put on GPU1. Therefore, we setting this number you should consider load balancing between the 2 GPUs with respect to number of training samples and number of jobs. The example I gave above is a rather good balance.
+    Go to line24 of `TrainSet_curve_sddal.sh` to indicate that in all the training jobs you wanted above, the first how many items in the list above do you want to put on GPU0, and the rest will be put on GPU1. Therefore, when setting this number you should consider load balancing between the 2 GPUs with respect to number of training samples and number of jobs. The example I gave above is a rather good balance.
 
     All set, now you can run the following command to train UNet-T from scratch on different number of generated samples for a specific beam shape. The evaluation (inference) results on the test set of the corresponding beam shape will be automatically done at the end of each training. The test set inference results will be stored in the folders like the one I have given as example `rec_100`. Please establish such folders for each number of training samples and each beam shapes you want to test by naming the established folder as `beamshape_NumSamp`. Don't forget to indicate the initial learning rate for the beam shape you will train as the second argument of `TrainSet_curve_sddal.sh`, and run:
 
