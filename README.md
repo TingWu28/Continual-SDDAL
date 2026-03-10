@@ -164,33 +164,89 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
 
     The GPU-switched SDDAL pipeline can automatically determine how many samples the currently running SDDAL has generated, kill the current SDDAL, and restart a same SDDAL on the other GPU but directly resuming from all the samples that have been accumulatively generated.
 
+- 4, Official dataset design: resume generation from where it stopped last time
+
+    `GPU_scheduler.sh + SDDAL_GPU_scheduled.sh` will automatically determine how many samples have been generated and resume from there. When first time run SDDAL, there is no sample generated yet, then `GPU_scheduler.sh + SDDAL_GPU_scheduled.sh` will automatically determine that entire SDDAL will be started from scratch.
+
+  However, if you use `SDDAL.sh` and you wish to resume the data generation process from where it stopped last time, you need to look into the corresponding `Design_beamshape` folder by yourself to figure out how many samples have been generated and accumulated in the design folder. Then you just set the parameter `<start_round>` of `SDDAL.sh` as the integer `(num_sample_already_generated/scanner_batchsize)` and run the `SDDAL.sh`.
+ 
+  Command:
+
 # Evaluate the performance of the generated training dataset
 
-- (1), Train UNet-T model from scratch on the generated training set. As already indicated in the previous section, for any generated dataset residing in any design folder, you should run the following command to train UNet-T on it:
-```text
-python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar
-```
-- (2), Test trained UNet-T model on InShaPe (CPU) test set. As already indicated in the previous section, you should run the following command for inference on test set:
-```text
-python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval
-```
-- (3), The predicted phase map, the ground-truth phase map, and the ground-truth intensity are stored in ./rec_result for RecTophat shape for example. Now switch into the result folder:
-```text
-cd ./rec_result/
-```
-- (4), Inside the result folder you will see a Python script named "FRCM.py", please create a new folder named "diff" in the current directory, and then run the following command then the phase prediction accuracy metrics MAE, SSIM, FRCM will be written in the generated evaluation.txt, you will also have KDE distribution of the metrics across the test set:
-```text
-nohup python3 FRCM.py > evaluation.txt 2>&1 &
-```
-- (5), Now switch back to the root directory of this project. Then switch into the folder "Active_Curve":
-```text
-cd ../Active_Curve/
-```
-- (6), Establish the folders to contain inference results of training UNet-T on different numbers of samples, then run the following command to launch all sample-variant trainings simultaneously:
-```text
-bash TrainSet_curve.sh rec 0.0002
-```
-In the end, you need to do step (4) for all result folders of the launched sample-variant trainings, collect results, and plot the active curve by yourself (shouldn't be too difficult.).
+- 1, Manual operation of single test jobs
+
+    - (1), Train UNet-T model from scratch on the generated training set. As already indicated in the previous section, for any generated dataset residing in any design folder, you should run the following command to train UNet-T on it:
+    ```text
+    python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar
+    ```
+    - (2), Test trained UNet-T model on InShaPe (CPU) test set. As already indicated in the previous section, you should run the following command for inference on test set:
+    ```text
+    python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval
+    ```
+    - (3), The predicted phase map, the ground-truth phase map, and the ground-truth intensity are stored in ./rec_result for RecTophat shape for example. Now switch into the result folder:
+    ```text
+    cd ./rec_result/
+    ```
+    - (4), Inside the result folder you will see a Python script named "FRCM.py", please create a new folder named "diff" in the current directory, and then run the following command then the phase prediction accuracy metrics MAE, SSIM, FRCM will be written in the generated evaluation.txt, you will also have KDE distribution of the metrics across the test set:
+    ```text
+    nohup python3 FRCM.py > evaluation.txt 2>&1 &
+    ```
+    - (5), Now switch back to the root directory of this project. Then switch into the folder "Active_Curve":
+    ```text
+    cd ../Active_Curve/
+    ```
+    - (6), Establish the folders to contain inference results of training UNet-T on different numbers of samples, then run the following command to launch all sample-variant trainings simultaneously:
+    ```text
+    bash TrainSet_curve.sh rec 0.0002
+    ```
+    In the end, you need to do step (4) for all result folders of the launched sample-variant trainings, collect results, and plot the active curve by yourself (shouldn't be too difficult.).
+
+- 1, bash operation of all test jobs you indicate launching to the background on a dedicated test server (a different machine more suitable for FRCM computation than your mainframe, i.e., main server, where SDDAL itself runs)
+  - (1), On your mainframe, train UNet-T model from scratch on the generated training set with different number of training samples in order of generated from earlier to later:
+
+    First please switch into the Acc-NumSamp retrain curve working directory:
+    
+    ```text
+    cd Active_Curve
+    ```
+    
+    Determine a list of number of samples you want to train the UNet-T on from scratch. Open the file `TrainSet_curve_sddal.sh` and revise line15 to be the list of number you desire. For example for following line15 of `TrainSet_curve_sddal.sh` indicates that I want to train UNet-T on 100 samples, 200 samples, 300 samples, 400 samples, 600 samples, 700 samples, 800 samples, and 900 samples, respectively:
+    
+    ```text
+    samples=(200 300 700 1000 400 500 800 900)
+    ```
+
+    Go to line24 of `TrainSet_curve_sddal.sh` to indicate that in all the training jobs you wanted above, the first how many items in the list above do you want to put on GPU0, and the rest will be put on GPU1. Therefore, we setting this number you should consider load balancing between the 2 GPUs with respect to number of training samples and number of jobs. The example I gave above is a rather good balance.
+
+    All set, now you can run the following command to train UNet-T from scratch on different number of generated samples for a specific beam shape. The evaluation (inference) results on the test set of the corresponding beam shape will be automatically done at the end of each training. The test set inference results will be stored in the folders like the one I have given as example `rec_100`. Please establish such folders for each number of training samples and each beam shapes you want to test by naming the established folder as `beamshape_NumSamp`. Don't forget to indicate the initial learning rate for the beam shape you will train as the second argument of `TrainSet_curve_sddal.sh`, and run:
+
+    Command:
+    ```text
+    bash TrainSet_curve_sddal.sh rec 0.0002
+    ```
+
+  - (2), Transfer the test set inference results of UNet-T trained on all different numbers of generated samples to a dedicated evaluation server where its CUDA version and environment are more convenient to compute the metric FRCM (Fourier Ring Correlation Metric):
+
+    Open the file `scp.sh` and revise line4 to be the list of number of training samples you used just and also indicate the IP address or domain name of the dedicated evaluation server, your user name, and the path of the folder you want to transfer the inference results into in line4. Save the change and run the following command with the beam shape you want to transfer as the only argument of `scp.sh` :
+
+    Command:
+    ```text
+    bash scp.sh rec
+    ```
+
+    The progress of the inter-machine internet-based FTP file transfer will be printed in the Linux commandline.
+
+    - (3), Run the metric calculation program on the dedicated evaluation server using the data transferred from mainframe:
+
+    On the dedicated evaluation server, enter the folder where you just now transferred inference data into. In this GitHub repository, I give the folder `eval_fixedinit` as an example. In the folder `eval_fixedinit`, you should see that all the folders containing different inference results are already transferred in good order in there. Two other files can also be found already readily exist in the folder `eval_fixedinit`, i.e., the `FRCM.py` and `eval_all.sh`. `FRCM.py` is the script that actually calculate MAE, SSIM, and FRCM for each sample in a specific inference result folder using GPUs. `eval_all.sh` is the scheduler that automatically launch all calculation jobs for all inference result folders. Therefore, simply run the following command in the root directory of the folder `eval_fixedinit`:
+
+    Command:
+    ```text
+    bash eval_all.sh
+    ```
+
+    After all evaluation jobs are finished, the MAE, SSIM, and FRCM scores for each inference result folder can be found in a log file called `evaluation.txt` in the corresponding inference result folder.
 
 # Sanity Checks for the differentiable batched Pytorch on-GPU simulation, with Direct Integration as Convolution (DIC) as diffractive propagator, of the PBF-LB/M beam shaping system of the EOS M290 additive manufacturing machine.
 
