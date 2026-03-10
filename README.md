@@ -83,7 +83,17 @@ Command:
 
 # Reproduce baseline training dataset of "Prior Distribution Sampling"
 
-One of the major baseline dataset we will compare our SDDAL-generated dataset with in our publication is a training set created from randomly sampling respective Zernike coefficients from their known prior distribution, which is a uniform distribution in range \[-1.5, 1.5\]
+One of the major baseline dataset we will compare our SDDAL-generated dataset with in our publication is a training set created from randomly sampling respective Zernike coefficients from their known prior distribution, which is a uniform distribution in range \[-1.5, 1.5\]. "Prior Distribution Sampling" is the most often seen common practice of training set creation when prior distribution in the data space of the real-world application is known and can be a power baseline hard to beat for many data generation methods, since the generated dataset theoretically has identical distribution with test set, of course, if the train-test distribution identical assumption holds.
+
+Therefore, here we also provide the command to reproduce the baseline training dataset of "Prior Distribution Sampling" underlying the comparison experimental results to be reported in our publication:
+
+Command:
+  
+  ```text
+  python3 Initializer.py --gpu 0 --beamshape rec --init_size 5000 --vis_path Design_rec
+  ```
+
+Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
 
 # Running SDDAL framework for dataset design
 
