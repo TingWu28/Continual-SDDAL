@@ -81,6 +81,10 @@ Command:
   python3 dataset_reproducer.py --gpu 0 --beamshape rec
   ```
 
+# Reproduce baseline training dataset of "Prior Distribution Sampling"
+
+One of the major baseline dataset we will compare our SDDAL-generated dataset with in our publication is a training set created from randomly sampling respective Zernike coefficients from their known prior distribution, which is a uniform distribution in range \[-1.5, 1.5\]
+
 # Running SDDAL framework for dataset design
 
 The entire pipeline of the simulation-driven differentiable active learning framework is organized in a Shell script (SDDAL.sh), which launches and recycles several implemented python modules periodically including:
