@@ -99,7 +99,9 @@ Please make sure that the `--vis_path` argument is different than the folder use
 
 As shown in the figure below, preliminary result show that SDDAL with weighted utility and distribution loss, hard physical boundary with gradient-free random reset, 50 iterations of scanner run, and 15 epochs of UNet-T retraining can significantly and consistently outperform "Prior Distribution Sampling" before reaching 2000 training samples generated.
 
-![Preliminary result of comparison between SDDAL and Prior Distribution Sampling](figures/luckfirst_fixedinit_reset0grad_50it_15ep.png)
+![Preliminary result with respect to MAE accuracy comparing SDDAL and Prior Distribution Sampling](figures/luckfirst_fixedinit_reset0grad_50it_15ep_mae.png)
+
+![Preliminary result with respect to SSIM accuracy comparing SDDAL and Prior Distribution Sampling](figures/luckfirst_fixedinit_reset0grad_50it_15ep_ssim.png)
 
 # Running SDDAL framework for dataset design
 
