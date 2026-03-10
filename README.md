@@ -110,11 +110,11 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
 
    - (6) Test on the InShaPe test set (CPU data).
 
-- 2, Official dataset design: Execute the following commands in sequence.
+- 2, Official dataset design: Design a dataset with a fixed GPU
  
   Command:
   
-  `bash SDDAL.sh rec 0.0002 100 false 1 580 0 5 1 false`
+  `bash SDDAL.sh rec 0.0002 100 false 342 1000 1 5 1 false`
   
    - (1) Create 100 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
  
@@ -124,7 +124,7 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
  
    - (4) Retrain the Quantile UNet model on the current_size+5 accumulated samples with the identical randomly initialized network weights to the first time training on 100 initial samples.
  
-   - (5) Go back to step (3) and repeat step (3) and (4) until the numer of samples generated satisfies your requirements (in this example, it asks for 3000 training samples in total).
+   - (5) Go back to step (3) and repeat step (3) and (4) until the numer of samples generated satisfies your requirements (in this example, it asks for 5000 training samples in total).
 
   Command:
 
@@ -137,6 +137,16 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
   `python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval`
 
    - (7) Test on the InShaPe test set (CPU data).
+
+- 3, Official dataset design: Design a dataset with two GPUs switched between each other at certain 2 points of time everyday
+
+    First, open the file "GPU_scheduler.sh", locate line47-55 to set all arguments for the SDDAL pipeline you want to run, e.g., beam shape, learning rate, etc; again locate line59-61 to set the hours and minutes when the pipeline will be moved from GPU1 to GPU0 and when it will be moved from GPU0 to GPU1. Save the changes and run the following command
+ 
+  Command:
+  
+  `nohup bash GPU_scheduler.sh > rec_GPU_scheduled.txt 2>&1 &`
+
+    The GPU-switched SDDAL pipeline can automatically determine how many samples the currently running SDDAL has generated, kill the current SDDAL, and restart a same SDDAL on the other GPU but directly resuming from all the samples that have been accumulatively generated.
 
 # Evaluate the performance of the generated training dataset
 
