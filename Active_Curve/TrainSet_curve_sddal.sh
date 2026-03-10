@@ -36,7 +36,7 @@ for n in "${samples[@]}"; do
     echo "Launching training for beamshape=${BEAMSHAPE}, num_samples=${n} (named as ${n_minus_100}) on GPU $gpu"
 
     nohup python3 train_unet.py \
-        --data "../SDDAL_InShaPe_fixedinit/Design_${BEAMSHAPE}" \
+        --data "../Design_${BEAMSHAPE}" \
         --epochs 15 \
         --batch_size 2 \
         --gpu "$gpu" \
