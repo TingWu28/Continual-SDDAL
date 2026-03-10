@@ -169,8 +169,7 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
     `GPU_scheduler.sh + SDDAL_GPU_scheduled.sh` will automatically determine how many samples have been generated and resume from there. When first time run SDDAL, there is no sample generated yet, then `GPU_scheduler.sh + SDDAL_GPU_scheduled.sh` will automatically determine that entire SDDAL will be started from scratch.
 
   However, if you use `SDDAL.sh` and you wish to resume the data generation process from where it stopped last time, you need to look into the corresponding `Design_beamshape` folder by yourself to figure out how many samples have been generated and accumulated in the design folder. Then you just set the parameter `<start_round>` of `SDDAL.sh` as the integer `(num_sample_already_generated/scanner_batchsize)` and run the `SDDAL.sh`.
- 
-  Command:
+
 
 # Evaluate the performance of the generated training dataset
 
