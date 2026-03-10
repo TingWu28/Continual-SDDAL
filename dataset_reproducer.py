@@ -46,7 +46,7 @@ if __name__ == '__main__':
         train_dataset, batch_size=batchsize, shuffle=False,
         num_workers=1, pin_memory=True, sampler=None)
     
-    print("Sanity check sample generation with RecTophat starts now!")
+    
     for i, (Z, name) in enumerate(train_loader):
         
         print(name)
@@ -71,4 +71,5 @@ if __name__ == '__main__':
             np.save(vis_dir+"/training_set/intensity/npy/"+"intensity"+nname[8:], I[j])
             mpimg.imsave(vis_dir+"/training_set/intensity/img/"+"intensity"+nname[8:-3]+"png", -I[j], cmap='Greys')
             np.save(vis_dir+"/training_set/phase/npy/"+"phase"+nname[8:], phase[j])
+
             mpimg.imsave(vis_dir+"/training_set/phase/img/"+"phase"+nname[8:-3]+"png", phase[j], cmap='Greys')
