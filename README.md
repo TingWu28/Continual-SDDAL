@@ -84,13 +84,17 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
   
   Command:
   
-  `bash SDDAL.sh rec 0.0002 1000 true 9999 9999 0 9999 9999`
+  ```text
+  bash SDDAL.sh rec 0.0002 1000 true 9999 9999 0 9999 9999
+  ```
   
    - (1) Create 1000 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
 
   Command:
-
-  `bash SDDAL.sh rec 9999 9999 false 1 200 0 5 9999 true`
+  
+  ```text
+  bash SDDAL.sh rec 9999 9999 false 1 200 0 5 9999 true
+  ```
    
    - (2) Train a Quantile UNet-T model on the 1000 initial samples.
 
@@ -99,14 +103,18 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
    - (4) The 1000 initial samples + 1000 active learned samples is the final 2000-sample training set.
 
   Command:
-
-  `python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar`
+  
+  ```text
+  python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar
+  ```
 
    - (5) Train a randomly initialized UNet-T model on the final 2000-sample training set (GPU data)
 
   Command:
-
-  `python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval`
+  
+  ```text
+  python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval
+  ```
 
    - (6) Test on the InShaPe test set (CPU data).
 
@@ -114,7 +122,9 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
  
   Command:
   
-  `bash SDDAL.sh rec 0.0002 100 false 342 1000 1 5 1 false`
+  ```text
+  bash SDDAL.sh rec 0.0002 100 false 342 1000 1 5 1 false
+  ```
   
    - (1) Create 100 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
  
@@ -128,13 +138,17 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
 
   Command:
 
-  `python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar`
+  ```text
+  python3 train_unet.py --data Design_rec --epochs 15 --batch_size 2 --gpu 0 --lr 0.0002 --step_size 2 --seed 123 --pth_name rec.pth.tar
+  ```
 
    - (6) Train a randomly initialized UNet-T model on the final 2000-sample training set (GPU data)
 
   Command:
 
-  `python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval`
+  ```text
+  python3 train_unet.py --data Design_rec --batch_size 2 --gpu 1 --seed 123 --pth_name rec.pth.tar --val_vis_path rec_result --eval
+  ```
 
    - (7) Test on the InShaPe test set (CPU data).
 
@@ -143,8 +157,10 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
     First, open the file "GPU_scheduler.sh", locate line47-55 to set all arguments for the SDDAL pipeline you want to run, e.g., beam shape, learning rate, etc; again locate line59-61 to set the hours and minutes when the pipeline will be moved from GPU1 to GPU0 and when it will be moved from GPU0 to GPU1. Save the changes and run the following command
  
   Command:
-  
-  `nohup bash GPU_scheduler.sh > rec_GPU_scheduled.txt 2>&1 &`
+
+  ```text
+  nohup bash GPU_scheduler.sh > rec_GPU_scheduled.txt 2>&1 &
+  ```
 
     The GPU-switched SDDAL pipeline can automatically determine how many samples the currently running SDDAL has generated, kill the current SDDAL, and restart a same SDDAL on the other GPU but directly resuming from all the samples that have been accumulatively generated.
 
