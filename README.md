@@ -95,6 +95,12 @@ Command:
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
 
+# Preliminary result of comparing with the "Prior Distribution Sampling" baseline
+
+As shown in the figure below, preliminary result show that SDDAL with weighted utility and distribution loss, hard physical boundary with gradient-free random reset, 50 iterations of scanner run, and 15 epochs of UNet-T retraining can significantly and consistently outperform "Prior Distribution Sampling" before reaching 2000 training samples generated.
+
+![Preliminary result of comparison between SDDAL and Prior Distribution Sampling](figures/luckfirst_fixedinit_reset0grad_50it_15ep.png)
+
 # Running SDDAL framework for dataset design
 
 The entire pipeline of the simulation-driven differentiable active learning framework is organized in a Shell script (SDDAL.sh), which launches and recycles several implemented python modules periodically including:
@@ -107,7 +113,7 @@ The entire pipeline of the simulation-driven differentiable active learning fram
 
 The external arguments of the shell script SDDAL.sh are:
 ```text
-bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?>
+bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?>
 ```
 
 - 1, Quick experiment: Execute the following commands in sequence.
