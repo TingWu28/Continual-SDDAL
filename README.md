@@ -65,6 +65,22 @@ rec_result/
     └── npy/
 ```
 
+# Reproduce the designed dataset from the optimally designed Zernike coefficients officially released by the authors
+
+The optimally designed Zernike coefficients underlying and responsible for the experiment results to be officially reported in the publication for this research will be released in a FigShare repository to be publicly available. Here we provide the handy tool to reproduce the entire designed dataset (intensity maps and phase maps) following the folder structure of this repository in good order.
+
+The Zernike coefficients should all reside in the following subfolder in each corresponding design folder:
+
+- `Design_rec/training_set/zernikes/`
+
+Then run the following command and the intensity maps and phase maps will be reproduced from the Zernike coefficients:
+
+Command:
+  
+  ```text
+  python3 dataset_reproducer.py --gpu 0 --beamshape rec
+  ```
+
 # Running SDDAL framework for dataset design
 
 The entire pipeline of the simulation-driven differentiable active learning framework is organized in a Shell script (SDDAL.sh), which launches and recycles several implemented python modules periodically including:
