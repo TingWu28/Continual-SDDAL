@@ -227,7 +227,7 @@ bash Neural_Experimental_Design.sh <beamshape> <lr> <initial_size> <init_only?> 
 
   - (2), Transfer the test set inference results of UNet-T trained on all different numbers of generated samples to a dedicated evaluation server where its CUDA version and environment are more convenient to compute the metric FRCM (Fourier Ring Correlation Metric):
 
-    Open the file `scp.sh` and revise line4 to be the list of number of training samples you used just and also indicate the IP address or domain name of the dedicated evaluation server, your user name, and the path of the folder you want to transfer the inference results into in line4. Save the change and run the following command with the beam shape you want to transfer as the only argument of `scp.sh` :
+    Open the file `scp.sh` and revise line4 to be the list of number of training samples you used just now and also indicate the IP address or domain name of the dedicated evaluation server, your user name, and the path of the folder you want to transfer the inference results into in line4. Save the change and run the following command with the beam shape you want to transfer as the only argument of `scp.sh` :
 
     Command:
     ```text
