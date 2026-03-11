@@ -161,7 +161,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
   Command:
   
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 342 1000 1 5 1 false
+  bash SDDAL.sh rec 0.0002 100 false 1 1000 0 5 1 false
   ```
   
    - (1) Create 100 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
