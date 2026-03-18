@@ -95,6 +95,8 @@ Command:
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
 
+Ting: Created a new folder named **Design_baseline** to store the dataset of "Prior Distribution Sampling".
+
 # Preliminary result of comparing with the "Prior Distribution Sampling" baseline
 
 As shown in the figure below, preliminary result show that SDDAL with weighted utility and distribution loss, hard physical boundary with gradient-free random reset, 50 iterations of scanner run, and 15 epochs of UNet-T retraining can significantly and consistently outperform "Prior Distribution Sampling" before reaching 2000 training samples generated.
