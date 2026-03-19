@@ -95,7 +95,7 @@ Command:
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
 
-Ting: Created a new folder named **Design_baseline** to store the dataset of "Prior Distribution Sampling".
+Ting: Created a new folder named **Design_rec_baseline** to store the dataset of "Prior Distribution Sampling".
 
 # Preliminary result of comparing with the "Prior Distribution Sampling" baseline
 
