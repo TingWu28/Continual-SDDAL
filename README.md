@@ -235,7 +235,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
     ```
     - (6), Establish the folders to contain inference results of training UNet-T on different numbers of samples, then run the following command to launch all sample-variant trainings simultaneously:
     ```text
-    bash TrainSet_curve.sh rec 0.0002
+    bash TrainSet_curve_sddal.sh rec 0.0002
     ```
     In the end, you need to do step (4) for all result folders of the launched sample-variant trainings, collect results, and plot the active curve by yourself (shouldn't be too difficult.).
 
