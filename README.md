@@ -288,6 +288,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
     After all evaluation jobs are finished, the MAE, SSIM, and FRCM scores for each inference result folder can be found in a log file called `evaluation.txt` in the corresponding inference result folder.
 
 # Sanity Checks for the differentiable batched Pytorch on-GPU simulation, with Direct Integration as Convolution (DIC) as diffractive propagator, of the PBF-LB/M beam shaping system of the EOS M290 additive manufacturing machine.
+Ting: for sanity check, change line 4 in Continual-SDDAL/Official_batched_fitting_DIC_fullscene/utils/loader.py
 
 - 1, Numerical accuracy: Check whether the difference between GPU-simulated (SDDAL) data and CPU-simulated (Processed InShaPe dataset) is small enough to be ignorable
 
