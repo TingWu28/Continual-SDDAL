@@ -90,7 +90,7 @@ Therefore, here we also provide the command to reproduce the baseline training d
 Command:
   
   ```text
-  python3 Initializer.py --gpu 0 --beamshape rec --init_size 5000 --vis_path Design_rec
+  bash SDDAL.sh rec 9999 5000 true 9999 9999 0 9999 9999 false 123 321
   ```
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
@@ -115,7 +115,7 @@ The entire pipeline of the simulation-driven differentiable active learning fram
 
 The external arguments of the shell script SDDAL.sh are:
 ```text
-bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?>
+bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_round> <gpu> <scanner_batch_size> <retrain_frequency> <scan_only?> <seed> <init_seed>
 ```
 
 - 1, Quick experiment: Execute the following commands in sequence.
@@ -123,7 +123,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
   Command:
   
   ```text
-  bash SDDAL.sh rec 0.0002 1000 true 9999 9999 0 9999 9999
+  bash SDDAL.sh rec 0.0002 1000 true 9999 9999 0 9999 9999 false 123 321
   ```
   
    - (1) Create 1000 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
@@ -131,7 +131,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
   Command:
   
   ```text
-  bash SDDAL.sh rec 9999 9999 false 1 200 0 5 9999 true
+  bash SDDAL.sh rec 9999 9999 false 1 200 0 5 9999 true 123 321
   ```
    
    - (2) Train a Quantile UNet-T model on the 1000 initial samples.
@@ -161,7 +161,7 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
   Command:
   
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 0 5 1 false
+  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 123 321
   ```
   
    - (1) Create 100 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
