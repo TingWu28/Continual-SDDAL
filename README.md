@@ -90,7 +90,23 @@ Therefore, here we also provide the command to reproduce the baseline training d
 Command:
   
   ```text
-  bash SDDAL.sh rec 9999 5000 true 9999 9999 0 9999 9999 false 123 321
+  bash SDDAL.sh rec 9999 1000 true 9999 9999 0 9999 9999 false 12345 1
+  ```
+
+  ```text
+  bash SDDAL.sh rec 9999 1000 true 9999 9999 0 9999 9999 false 12345 2
+  ```
+
+  ```text
+  bash SDDAL.sh rec 9999 1000 true 9999 9999 0 9999 9999 false 12345 3
+  ```
+
+  ```text
+  bash SDDAL.sh rec 9999 1000 true 9999 9999 0 9999 9999 false 12345 4
+  ```
+
+  ```text
+  bash SDDAL.sh rec 9999 1000 true 9999 9999 0 9999 9999 false 12345 5
   ```
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
@@ -161,23 +177,23 @@ bash SDDAL.sh <beamshape> <lr> <initial_size> <init_only?> <start_round> <end_ro
   Command:
   
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 1
+  bash SDDAL.sh rec 0.0002 100 false 1 200 0 5 1 false 1
   ```
 
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 2
+  bash SDDAL.sh rec 0.0002 100 false 1 200 0 5 1 false 2
   ```
 
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 3
+  bash SDDAL.sh rec 0.0002 100 false 1 200 0 5 1 false 3
   ```
 
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 4
+  bash SDDAL.sh rec 0.0002 100 false 1 200 0 5 1 false 4
   ```
 
   ```text
-  bash SDDAL.sh rec 0.0002 100 false 1 1000 1 5 1 false 5
+  bash SDDAL.sh rec 0.0002 100 false 1 200 0 5 1 false 5
   ```
   
    - (1) Create 100 initial samples by randomly sampling Zernike coefficients from uniform(-1.5, 1.5).
