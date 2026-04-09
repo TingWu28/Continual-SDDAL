@@ -5,6 +5,8 @@ Shengyuan Yan, TU/e, Eindhoven, Netherlands, 18:00pm, 4/08/2025
 import numpy as _np
 import torch
 from torch import nn
+import math
+_np.math = math
 
 def zernike(n,m,rho,phi):
     
