@@ -90,23 +90,23 @@ Therefore, here we also provide the command to reproduce the baseline training d
 Command:
   
   ```text
-  bash SDDAL.sh rec 9999 1000 false true 9999 9999 0 9999 9999 false 12345 1
+  bash SDDAL.sh rec 9999 1100 false true 9999 9999 0 9999 9999 false 12345 1
   ```
 
   ```text
-  bash SDDAL.sh rec 9999 1000 false true 9999 9999 0 9999 9999 false 12345 2
+  bash SDDAL.sh rec 9999 1100 false true 9999 9999 0 9999 9999 false 12345 2
   ```
 
   ```text
-  bash SDDAL.sh rec 9999 1000 false true 9999 9999 0 9999 9999 false 12345 3
+  bash SDDAL.sh rec 9999 1100 false true 9999 9999 0 9999 9999 false 12345 3
   ```
 
   ```text
-  bash SDDAL.sh rec 9999 1000 false true 9999 9999 0 9999 9999 false 12345 4
+  bash SDDAL.sh rec 9999 1100 false true 9999 9999 0 9999 9999 false 12345 4
   ```
 
   ```text
-  bash SDDAL.sh rec 9999 1000 false true 9999 9999 0 9999 9999 false 12345 5
+  bash SDDAL.sh rec 9999 1100 false true 9999 9999 0 9999 9999 false 12345 5
   ```
 
 Please make sure that the `--vis_path` argument is different than the folder used by SDDAL data generation to avoid writing conflict between "Prior Distribution Sampling" and SDDAL.
